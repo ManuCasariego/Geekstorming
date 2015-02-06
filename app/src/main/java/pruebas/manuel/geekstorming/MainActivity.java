@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     private ListView listView;
     private ArrayAdapter<Entry> adapter;
     private String link = "https://geekstorming.wordpress.com/feed/";
-    private List<Entry> entradas;
+    private List<Entry> entradas;private List<Entry> entradasAux;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +67,10 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         adapter.setNotifyOnChange(true);
         listView.setOnItemClickListener(this); //Esto le hace override al onitemclick
         listView.setAdapter(adapter);
+        entradas = new ArrayList<>();
     }
 
     private void empezarTarea() {
-
-        if (!adapter.isEmpty()) {
-            adapter.clear();
-        }
         CargarXmlTask tarea = new CargarXmlTask();
         tarea.execute(link);
     }
@@ -91,12 +90,26 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         protected Boolean doInBackground(String... params) {
             RssParserSax saxparser =
                     new RssParserSax(params[0]);
-            entradas = saxparser.parse();
+
+             entradasAux = saxparser.parse();
             return true;
         }
 
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
+
+
+
+            if(entradasAux.isEmpty()){
+                Toast.makeText(MainActivity.this, "No hay conexion a internet", Toast.LENGTH_LONG).show();
+            }
+            else {
+                entradas = entradasAux;
+                if (!adapter.isEmpty()) {
+                    adapter.clear();
+                }
+            }
+            //TODO: hay un problema que si entradasAux es vacio, repite las entradas al no hacer el clear
             for (int i = 0; i < entradas.size(); i++) {
                 adapter.add(entradas.get(i));
             }

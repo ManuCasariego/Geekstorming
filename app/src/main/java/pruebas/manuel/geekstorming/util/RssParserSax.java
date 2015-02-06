@@ -1,9 +1,12 @@
 package pruebas.manuel.geekstorming.util;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.SAXParser;
@@ -29,15 +32,20 @@ public class RssParserSax {
             parser.parse(this.getInputStream(), handler);
             return handler.getEntradas();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
+            Log.d("Error en parse", "Error en parse");
+            return new ArrayList<>();
         }
+
     }
 
     private InputStream getInputStream() {
         try {
             return rssUrl.openConnection().getInputStream();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
+            Log.d("Error en getInputStream", "Error en getInputStream");
+            return null;
         }
     }
 }
