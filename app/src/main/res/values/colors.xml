@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+
+    <item name="PrimaryColor" type="color">#FF9800</item>
+    <item name="PrimaryColorDark" type="color">#F57C00</item>
+    <item name="SecundaryColor" type="color">#03A9F4</item>
+    <item name="Black" type="color">#212121</item>
+    <item name="Grey" type="color">#9E9E9E</item>
+    <item name="DarkGrey" type="color">#616161</item>
+
+</resources>
