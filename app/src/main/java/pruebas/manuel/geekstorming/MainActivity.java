@@ -27,7 +27,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     private ListView listView;
     private ArrayAdapter<Entry> adapter;
     private String link = "https://geekstorming.wordpress.com/feed/";
-    private List<Entry> entradas;private List<Entry> entradasAux;
+    private List<Entry> entradas;
+    private List<Entry> entradasAux;
 
 
     @Override
@@ -44,7 +45,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         Intent i = new Intent(MainActivity.this, EntryActivity.class);
         i.putExtra("title", entradas.get(position).getTitle());
         i.putExtra("content", entradas.get(position).getContent());
-
         //Esto es de la animacion
                 /*ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         MainActivity.this,
@@ -71,8 +71,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     }
 
     private void empezarTarea() {
-        CargarXmlTask tarea = new CargarXmlTask();
-        tarea.execute(link);
+        new CargarXmlTask().execute(link);
     }
 
     private class CargarXmlTask extends AsyncTask<String, Integer, Boolean> {
@@ -90,28 +89,22 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         protected Boolean doInBackground(String... params) {
             RssParserSax saxparser =
                     new RssParserSax(params[0]);
-
-             entradasAux = saxparser.parse();
+            entradasAux = saxparser.parse();
             return true;
         }
 
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-
-
-
-            if(entradasAux.isEmpty()){
+            if (entradasAux.isEmpty()) {
                 Toast.makeText(MainActivity.this, "No hay conexion a internet", Toast.LENGTH_LONG).show();
-            }
-            else {
+            } else {
                 entradas = entradasAux;
                 if (!adapter.isEmpty()) {
                     adapter.clear();
                 }
-            }
-            //TODO: hay un problema que si entradasAux es vacio, repite las entradas al no hacer el clear
-            for (int i = 0; i < entradas.size(); i++) {
-                adapter.add(entradas.get(i));
+                for (int i = 0; i < entradas.size(); i++) {
+                    adapter.add(entradas.get(i));
+                }
             }
             // Dejar de mostrar proceso de carga
             if (pDialog.isShowing())
@@ -142,8 +135,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             empezarTarea();
             return true;
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 

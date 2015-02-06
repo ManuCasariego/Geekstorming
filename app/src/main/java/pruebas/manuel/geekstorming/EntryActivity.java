@@ -6,14 +6,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
-import android.widget.TextView;
 
 
 public class EntryActivity extends ActionBarActivity {
 
-
-    private TextView tvTitle;
-    private TextView tvContent;
+    private WebView webView;
     private String title;
     private String content;
 
@@ -28,9 +25,8 @@ public class EntryActivity extends ActionBarActivity {
     }
 
     private void inicializarComponentes() {
-        WebView wb = (WebView) findViewById(R.id.webView);
-
-        wb.loadDataWithBaseURL("", content, "text/html", "UTF-8", "");
+        webView = (WebView) findViewById(R.id.webView);
+        webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", "");
     }
 
 
@@ -55,7 +51,6 @@ public class EntryActivity extends ActionBarActivity {
             finish();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

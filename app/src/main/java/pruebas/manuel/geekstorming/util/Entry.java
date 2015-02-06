@@ -1,12 +1,7 @@
 package pruebas.manuel.geekstorming.util;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
-/**
- * Created by Manuel on 03/02/2015.
- */
 public class Entry {
 
     private String title = null, link = null, content = null, creator = null;
@@ -49,28 +44,28 @@ public class Entry {
     public void setTitle(String title) {
         if(this.title == null){
             this.title = quitarBlancos(title);
-            Log.d("Title", quitarBlancos(title));
+            //Log.d("Title", quitarBlancos(title));
         }
     }
 
     public void setLink(String link) {
         this.link = quitarBlancos(link);
-        Log.d("Link", quitarBlancos(link));
+        //Log.d("Link", quitarBlancos(link));
     }
 
     public void setContent(String content) {
         this.content = quitarBlancos(content);
-        Log.d("Content", quitarBlancos(content));
+        //Log.d("Content", quitarBlancos(content));
     }
 
     public void setCreator(String creator) {
         this.creator = quitarBlancos(creator);
-        Log.d("Creator", quitarBlancos(creator));
+        //Log.d("Creator", quitarBlancos(creator));
     }
 
     public void setCategorias(String categories) {
         this.categories.add(quitarBlancos(categories));
-        Log.d("Categories", quitarBlancos(categories));
+        //Log.d("Categories", quitarBlancos(categories));
     }
     //</editor-fold>
 
